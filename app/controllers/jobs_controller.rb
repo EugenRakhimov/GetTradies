@@ -45,10 +45,9 @@ class JobsController < ApplicationController
     if session[:user_id]
       @job = Job.create(create_job_params)
       @job.update(:user_id => user_id)
-      redirect_to job_path(@job)
+      render json: {notice:"Job created"} 
     else
-      render text: "Please <a href='/sessions/new'>log-in</a> if you'd like to post a job"
-#      render '/users/new.html.erb'
+      render json: {alert: "Please log-in if you'd like to post a job"} , status: :unauthorized
     end
 
   end
@@ -60,15 +59,12 @@ class JobsController < ApplicationController
     if @current_user && job
       if (@current_user == job.user)
         job.destroy
-        flash.notice = "Job deleted"
-        redirect_to user_jobs_path(@current_user)
+        render json: {notice:"Job deleted"} 
       else
-        flash.alert = "You are trying delete others job"
-        redirect_to jobs_path(@current_user)
+        render json: {alert: "You are trying delete others job"} , status: :forbidden
       end
     else
-      flash.alert = "You should be logged in to delete jobs"
-      redirect_to jobs_path
+      render json: {alert: "You should be logged in to delete jobs"} , status: :unauthorized
     end
   end
 

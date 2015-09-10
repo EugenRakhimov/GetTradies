@@ -2,10 +2,15 @@
 (function () {
 var getTradiesControllers = angular.module('getTradiesControllers', [])
 
-getTradiesControllers.controller('JobController', ['$scope', 'Job', function ($scope, Job)
+getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job', function ($scope,$routeParams, Job)
 {
 
- $scope.jobs=Job.query(function() { console.log($scope.jobs)});
+ $scope.jobs = Job.query(function() { console.log($scope.jobs)});
+ $scope.deleteJob = function(job_id) {
+  console.log("job_id" +job_id)
+  Job.delete({job_id:job_id});
+  $scope.jobs = Job.query(function() { console.log($scope.jobs)});
+ }
 
 }]);
 
@@ -16,13 +21,13 @@ getTradiesControllers.controller('JobDetailController', ['$scope','$routeParams'
   }); // get() returns a single entry
 }]);
 
-getTradiesControllers.controller('JobNewController', ['$scope','$routeParams', 'Job', function ($scope, $routeParams, Job){
+getTradiesControllers.controller('JobNewController', ['$scope','$routeParams', 'Job', '$location', function ($scope, $routeParams, Job, $location){
 
 $scope.update=function(job) {
   job_to_s=new Job(job)
   job_to_s.$save(function(){
     console.log("it should redirect");
-    redirectTo: '/jobs'
+    $location.path('/jobs')
   });
 };
 

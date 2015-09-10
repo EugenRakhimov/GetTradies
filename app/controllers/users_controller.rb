@@ -55,7 +55,7 @@ class UsersController < ApplicationController
       end
       if @user.profession != customer
         comments=[]
-        user.tenders.where(tender.accepted: true).each do |tender|
+        user.tenders.where(accepted: true).each do |tender|
           if tender.comment
             comments << {comment:tender.comment,user: tender.job.user.username}
           end
