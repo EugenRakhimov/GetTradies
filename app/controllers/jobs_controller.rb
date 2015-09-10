@@ -40,11 +40,12 @@ class JobsController < ApplicationController
   end
 
   def create
+    p "angular hits this route"
     puts user_id = session[:user_id]
     if session[:user_id]
       @job = Job.create(create_job_params)
       @job.update(:user_id => user_id)
-      redirect_to "/jobs"
+      redirect_to job_path(@job)
     else
       render text: "Please <a href='/sessions/new'>log-in</a> if you'd like to post a job"
 #      render '/users/new.html.erb'

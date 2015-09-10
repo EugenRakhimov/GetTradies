@@ -16,6 +16,19 @@ getTradiesControllers.controller('JobDetailController', ['$scope','$routeParams'
   }); // get() returns a single entry
 }]);
 
+getTradiesControllers.controller('JobNewController', ['$scope','$routeParams', 'Job', function ($scope, $routeParams, Job){
+
+$scope.update=function(job) {
+  job_to_s=new Job(job)
+  job_to_s.$save(function(){
+    console.log("it should redirect");
+    redirectTo: '/jobs'
+  });
+};
+
+}]);
+
+
 getTradiesControllers.controller('UserJobsController', ['$scope','$routeParams', 'UserJobs', function ($scope,$routeParams, UserJobs)
 {
   console.log($routeParams.user_id)

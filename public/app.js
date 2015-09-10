@@ -14,10 +14,15 @@ app.config(['$routeProvider',
         templateUrl: 'partials/job-list.html',
         controller: 'JobController'
       }).
+      when('/jobs/new_form', {
+        templateUrl: 'partials/job-new.html',
+        controller: 'JobNewController'
+      }).
       when('/jobs/:jobId', {
         templateUrl: 'partials/job-detail.html',
         controller: 'JobDetailController'
       }).
+
       when('/users/:user_id/jobs', {
         templateUrl: 'partials/job-list.html',
         controller: 'UserJobsController'
