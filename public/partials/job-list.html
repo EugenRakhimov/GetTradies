@@ -3,7 +3,7 @@
   <p>Description: {{job.description}}</p>
   <p>Location: {{job.location}}</p>
   <a href="#/jobs/{{job.id}}">More info</a>
-  <a href="{{job.showInterestLink}}">Show interest</a>
+  <a ng-click="showInterestForJob(job.id)" class="btn btn-danger">Show interest</a>
   <a href="#/users/{{job.job.user_id}}/jobs">More jobs by this user</a>
   <a ng-click="deleteJob(job.id)" class="btn btn-danger">Delete</a>
 </div>

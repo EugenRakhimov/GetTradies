@@ -28,20 +28,16 @@ class TendersController < ApplicationController
       if user.profession != 'customer'
         if !job.tenders.find_by_user_id(user.id)
           Tender.create(job:job,user:user)
-          flash.notice = 'You successfully applied for a job'
-          # render text: "My jobs"
+           puts 'tender create'
+          render json: {notice:'You successfully applied for a job'}
         else
-          flash.alert = "You already applied for this job"
+          render json: {alert:"You already applied for this job"}, status: :forbidden
         end
-        redirect_to user_tenders_path(user)
       else
-        flash.notice = 'You need to be registered as a tradie to apply'
-        redirect_to jobs_url
+        render json: {alert:'You need to be registered as a tradie to apply'}, status: :forbidden
       end
     else
-      flash.notice = 'You need to be logged in to register interest in a job'
-#      render '/users/_new.html.erb'
-      redirect_to jobs_url
+      render json: {alert: "You should be logged in to register interest in a job"} , status: :unauthorized
     end
     # params[:job_id]
   end
