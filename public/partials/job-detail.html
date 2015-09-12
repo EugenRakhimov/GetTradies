@@ -4,8 +4,18 @@
       <p>Location: {{job.job.location}}</p>
       <a href={{job.showInterestLink}}>Show interest</a>
       <a href="#/users/{{job.job.user_id}}/jobs">More jobs by this user</a>
-      <div ng-show="tradie">
+      <div ng-show="job.accepted_tradie">
         <p> </p>
-        <p> You have accepted offer from </p>
-        <p> </p>
+        <p> You have accepted offer from {{job.accepted_tradie.username}} </p>
+        <p ng-show="job.accepted_tradie.email">Tradie email: {{job.accepted_tradie.email}} </p>
+        <p ng-show="job.accepted_tradie.phone">Tradie phone number: {{job.accepted_tradie.phone}} </p>
+        <p ng-show="job.accepted_tradie.photo"> </p>
+        <a href="#/users/"+"job.accepted_tradie.id">Accepted tradie profile</a>
       </div>
+      <div ng-repeat="tradie in job.tradies">
+        <p ng-show="tradie.name">Tradie {{tradie.name}} has a bid on your job</p>
+        <p ng-show="tradie.photo"> </p>
+        <a href="#/users/"+"tradie.id">Tradie profile</a>
+        <a ng-click="acceptTradie(job.job.id, tradie.tender_id)">Accept this tradie</a>
+      </div>
+

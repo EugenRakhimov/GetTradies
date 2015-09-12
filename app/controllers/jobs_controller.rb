@@ -19,7 +19,25 @@ class JobsController < ApplicationController
     @current_user = User.find_by_id(session[:user_id])
     @job = Job.find(params[:id])
     @accepted_tender = Tender.where(job_id: @job.id, accepted: true).first
+    accepted_tradie = if @accepted_tender
+      { username: @accepted_tender.user.username,
+        email: @accepted_tender.user.email,
+        phone: @accepted_tender.user.phone_number,
+        id: @accepted_tender.user.id
+      }
+    else
+      nil
+    end
     @tenders = Tender.where(job_id: @job.id, accepted: false)
+    tradies = []
+    @tenders.each do |tender|
+      tradie = {}
+      tradie[:name] = tender.user.username if tender.user.username
+      tradie[:photo] = tender.user.image_file_name if tender.user.image_file_name
+      tradie[:id] = tender.user_id
+      tradie[:tender_id] = tender.id
+      tradies << tradie
+    end
     @tender_changeable = true
     if @accepted_tender
       @tender_changeable = false if @accepted_tender.updated_at > 30.seconds.ago
@@ -30,7 +48,7 @@ class JobsController < ApplicationController
     end
     @job_complete = false if Tender.where(job_id: @job.id).length == 0
     # render text: @tenders.length
-    hash_for_job_show={job:@job,accepted_tender: @accepted_tender,tenders: @tenders,
+    hash_for_job_show={job:@job,accepted_tradie: accepted_tradie,tradies: tradies,
       job_complete:@job_complete, image:@job.image.url(:medium)}
     render json: hash_for_job_show
   end

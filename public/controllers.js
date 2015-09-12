@@ -2,14 +2,18 @@
 (function () {
 var getTradiesControllers = angular.module('getTradiesControllers', [])
 
-getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job', 'JobTenders' , function ($scope,$routeParams, Job, JobTenders)
+getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job', 'JobTenders' , 
+  function ($scope,$routeParams, Job, JobTenders)
 {
 
- $scope.jobs = Job.query(function() { console.log($scope.jobs)});
+ $scope.jobs = Job.query(function() {});
+ 
  $scope.deleteJob = function(job_id) {
   console.log("job_id" +job_id)
   Job.delete({job_id:job_id});
-  $scope.jobs = Job.query(function() { console.log($scope.jobs)});
+  $scope.jobs = Job.query(function() {
+
+  });
  }
 
  $scope.showInterestForJob = function(job_id) {
@@ -18,16 +22,22 @@ getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job
     {
       console.log("tender created");
     });
-  $scope.jobs = Job.query(function() { console.log($scope.jobs)});
+  $scope.jobs = Job.query(function() {});
  }
 
 }]);
 
-getTradiesControllers.controller('JobDetailController', ['$scope','$routeParams', 'Job', function ($scope, $routeParams, Job){
+getTradiesControllers.controller('JobDetailController', ['$scope','$routeParams', 'Job', 'JobTenders', 
+  function ($scope, $routeParams, Job, JobTenders){
    console.log($routeParams.jobId)
    $scope.job = Job.get({ job_id: $routeParams.jobId }, function(job) {
-    console.log($scope.job);
+    
   }); // get() returns a single entry
+
+   $scope.acceptTradie =  function (job_id, tender_id) {
+     JobTenders.update({job_id:job_id,tender_id:tender_id}, {accepted:true});
+      $scope.job = Job.get({ job_id: $routeParams.jobId });
+   }
 }]);
 
 getTradiesControllers.controller('JobNewController', ['$scope','$routeParams', 'Job', '$location', function ($scope, $routeParams, Job, $location){

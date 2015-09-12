@@ -46,13 +46,22 @@ class TendersController < ApplicationController
     tender = Tender.find(params[:id])
     if params[:tender]
       # render text: "this is what you're looking for: #{params[:tender][:comment]}"
+      if params[:accepted] == true
+        tenders = tender.job.tenders.where( accepted: true)
+        p tenders
+        tenders.each do |job_tender|
+          job_tender.update(accepted:false)
+        end
+
+        tender.update(accepted: true)
+      end
       tender.update(comment: params[:tender][:comment])
-      redirect_to "/jobs/#{tender.job_id}"
+      render json: {notice: "comment posted"}
     else
-    job_tenders = Tender.where(job_id: tender.job_id)
-    job_tenders.each { |job| job.update(accepted: false)}
-    tender.update(accepted: true)
-    redirect_to "/jobs/#{tender.job_id}"
+      job_tenders = Tender.where(job_id: tender.job_id)
+      job_tenders.each { |job| job.update(accepted: false)}
+      
+      render json: {notice: "tender accepted"}
     end
   end
 

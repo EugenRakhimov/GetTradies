@@ -6,7 +6,10 @@ getTradieServices.factory('Job', ['$resource',
   }]);
 getTradieServices.factory('JobTenders', ['$resource',
   function($resource){
-    return $resource('jobs/:job_id/tenders/:tender_id.json', {job_id:'@job_id', tender_id:'@tender_id'});
+    return $resource('jobs/:job_id/tenders/:tender_id.json', {job_id:'@job_id', tender_id:'@tender_id'},
+      {
+        'update': { method:'PUT' }
+      });
   }]);
 
 getTradieServices.factory('UserJobs', ['$resource',
