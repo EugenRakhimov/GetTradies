@@ -52,6 +52,21 @@ $scope.update=function(job) {
 
 }]);
 
+getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 'User', '$location', function ($scope, $routeParams, User, $location){
+
+$scope.create=function(user) {
+  // if (user.password === user.password_confirmation)
+    
+    user_to_c=new User(user)
+    user_to_c.$save(function(){
+      console.log("it should redirect");
+      $location.path('/jobs')
+    // }
+  });
+};
+
+}]);
+
 
 getTradiesControllers.controller('UserJobsController', ['$scope','$routeParams', 'UserJobs', function ($scope,$routeParams, UserJobs)
 {

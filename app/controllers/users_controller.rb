@@ -5,25 +5,14 @@ class UsersController < ApplicationController
 
   def create
     if !User.find_by_email(user_signup_params[:email])
-       if user_signup_params[:password] == user_signup_params[:password_confirm]
-        if verify_recaptcha
           @user = User.new(user_signup_params)
           @user.save
-          # UserMailer.welcome_email(@user).deliver_now
           session[:user_id] = @user.id
-          redirect_to edit_user_path(@user)
-        else
-          flash[:notice] = "Click the captcha, robut"
-          redirect_to '/'
-        end
-       else
-        flash[:notice] = "password must match."
-        redirect_to '/'
-       end
+          render json: {message: "user created"}           
     else
       flash[:notice] = "email already assigned to account. Please log in."
-      redirect_to '/'
-
+      render json: {message: "email already assigned to account. 
+        Please log in. If you forgot your password you can recover it"}, status: :conflict   
     end
   end
 
