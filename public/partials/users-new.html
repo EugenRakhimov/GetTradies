@@ -1,0 +1,27 @@
+<div ng-controller="UserNewController">
+  <form novalidate class="simple-form" name="userForm">
+	  <fieldset>
+	    <legend class="sr-only">Sign up</legend>
+	    <div class="form-group">
+	        <label for="email" class="control-label sr-only">Email:</label>
+	        <input id="email" name="uEmail" type="email" ng-model="user.email" required />
+	        <div ng-show="userForm.$submitted || userForm.uEmail.$dirty">
+		      <span ng-show="userForm.uEmail.$error.required">Tell us your email.</span>
+		      <span ng-show="userForm.uEmail.$error.email">This is not a valid email.</span>
+		    </div>
+	    </div>
+	    <div class="form-group">	        <label for="password" class="control-label sr-only">Password:</label>
+	        <input id="password" name="password" type="password" ng-model="user.password" required minlength="6"/>
+	        <div ng-show="userForm.$submitted || userForm.password.$dirty">
+		      <span ng-show="userForm.password.$error.required">Enter your password</span>
+		      <span ng-show="userForm.password.$error.minlength">Password must be longer 6 simbols</span>
+		    </div>
+	    </div>
+	    <div class="form-group">
+	        <label for="password_confirm" class="control-label sr-only" >Confirm password:</label>
+	        <input id="password_confirm" name="password_confirm" type="password" ng-model="user.password_confirmation" required minlength="6"/><br>
+	    </div>
+	    <input type="submit" value="Sign up" class="btn btn-success form-control" ng-click="create(user)" ng-disabled="userForm.$invalid">
+	  </fieldset>
+	</form>
+</div>
