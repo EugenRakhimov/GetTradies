@@ -57,10 +57,12 @@ getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 
 $scope.create=function(user) {
   // if (user.password === user.password_confirmation)
     
-    user_to_c=new User(user)
-    user_to_c.$save(function(){
-      console.log("it should redirect");
-      $location.path('/jobs')
+    user_to_create = new User(user)
+    user_to_create.$save(function(){
+      $scope.user = user_to_create; 
+      console.log("it should redirect to user edit page");
+
+      $location.path('/users/'+user_to_create.id+'/edit')
     // }
   });
 };

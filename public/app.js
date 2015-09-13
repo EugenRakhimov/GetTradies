@@ -24,8 +24,13 @@ app.config(['$routeProvider',
       }).
       when('/users/new', {
         templateUrl: 'partials/users-new.html',
-        controller: 'UserJobsController'
+        controller: 'UserNewController'
+      }). 
+      when('/users/:user_id/edit', {
+        templateUrl: 'partials/profile.html',
+        controller: 'UserNewController'
       }).
+
       when('/users/:user_id/jobs', {
         templateUrl: 'partials/job-list.html',
         controller: 'UserJobsController'

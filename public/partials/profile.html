@@ -1,0 +1,67 @@
+<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+  <h2>Update user profile</h2>
+   <!-- TODO user image -->
+   <form novalidate class="simple-form" name="profileForm">
+    <div class="form-group input-group">
+      <label for="username" class="control-label sr-only">Username:</label>
+      <input id="username" name="username" type="text" ng-model="user.username" required placeholder = "Please enter your user name"/>
+    </div>
+    <div class="form-group input-group">
+      <label for="given_name" class="control-label sr-only">Given name:</label>
+      <input id="given_name" name="given_name" type="text" ng-model="user.given_name" required placeholder = "Please enter your given name"/>    
+    </div>
+    <div class="form-group input-group">
+      <label for="family_name" class="control-label sr-only">Family name:</label>
+      <input id="family_name" name="family_name" type="text" ng-model="user.family_name" placeholder = "Please enter your family name"/>     
+    </div>
+    <div class="form-group input-group">
+      <label for="email" class="control-label sr-only">Email:</label>
+      <input id="email" name="uEmail" type="email" ng-model="user.email" readonly />
+    </div>
+    <div class="form-group input-group">
+      <label for="address" class="control-label sr-only">Address:</label>
+      <input id="address" name="address" type="text" ng-model="user.address" placeholder = "Please enter your address"/>      
+    </div>
+    <div class="form-group input-group">
+      <label for="phone_number" class="control-label sr-only">Phone number:</label>
+      <input id="phone_number" name="phone_number" type="text" required ng-model="user.phone_number" placeholder = "Please enter your phone number" minlength="10"/>
+    </div>
+    <div>
+      <!-- TODO image a -->
+    </div>
+
+    I am a tradie: <input type="checkbox" ng-model="tradie" aria-label="I am a tradie"><br/>
+    <div ng-show="tradie">
+      <label for="profession" class="control-label sr-only">Profession</label><br/>
+      <label>
+        <input type="radio" ng-model="user.profession" value="Builder">
+        Builder
+      </label><br/>
+      <label>
+        <input type="radio" ng-model="user.profession" value="Electrician">
+        Electrician
+      </label><br/>
+      <label>
+        <input type="radio" ng-model="user.profession" value="Plumber">
+        Plumber
+      </label><br/>
+      <label>
+        <input type="radio" ng-model="user.profession" value="Painter">
+        Painter
+      </label><br/>
+      <label>
+        <input type="radio" ng-model="user.profession" value="Plasterer">
+        Plasterer
+      </label><br/>
+      <label>
+        <input type="radio" ng-model="user.profession" value="General Handy Man">
+        General Handy Man
+      </label><br/>   
+      <div class="form-group input-group">
+          <label for="description" class="control-label sr-only">Description:</label>
+          <textarea id="description" name="description" type="text" ng-model="user.description" placeholder =  "Describe yourself and your skills">  </textarea>
+      </div>  
+    </div>
+     <input type="submit" value="Save" class="btn btn-success form-control" ng-click="update(user)" ng-disabled="profileForm.$invalid">
+  </form>
+</div>

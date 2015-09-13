@@ -8,7 +8,7 @@ class UsersController < ApplicationController
           @user = User.new(user_signup_params)
           @user.save
           session[:user_id] = @user.id
-          render json: {message: "user created"}           
+          render json: @user          
     else
       flash[:notice] = "email already assigned to account. Please log in."
       render json: {message: "email already assigned to account. 
