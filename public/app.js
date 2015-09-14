@@ -28,7 +28,7 @@ app.config(['$routeProvider',
       }). 
       when('/users/:user_id/edit', {
         templateUrl: 'partials/profile.html',
-        controller: 'UserNewController'
+        controller: 'UserUpdateController'
       }).
 
       when('/users/:user_id/jobs', {

@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(session[:user_id])
     end
-      user_hash_to_json = {id:user.id}
+      user_hash_to_json = {id:@user.id}
       if @user == @current_user
         user_hash_to_json[:user] = @user
       end
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
       if @user.jobs
         user_hash_to_json[:jobs] = true
       end
-      if @user.profession != customer
+      if @user.profession != 'customer'
         comments=[]
         user.tenders.where(accepted: true).each do |tender|
           if tender.comment

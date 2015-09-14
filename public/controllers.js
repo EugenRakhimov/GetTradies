@@ -54,20 +54,43 @@ $scope.update=function(job) {
 
 getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 'User', '$location', function ($scope, $routeParams, User, $location){
 
-$scope.create=function(user) {
-  // if (user.password === user.password_confirmation)
-    
-    user_to_create = new User(user)
-    user_to_create.$save(function(){
-      $scope.user = user_to_create; 
-      console.log("it should redirect to user edit page");
+  $scope.create=function(user) {
+    // if (user.password === user.password_confirmation)
+      
+      user_to_create = new User(user)
+      user_to_create.$save(function(){
+        $scope.user = user_to_create; 
+        console.log("it should redirect to user edit page");
 
-      $location.path('/users/'+user_to_create.id+'/edit')
-    // }
-  });
-};
-
+        $location.path('/users/'+user_to_create.id+'/edit')
+      // }
+    });
+  };
 }]);
+
+getTradiesControllers.controller('UserUpdateController', ['$scope','$routeParams', 'User', '$location', function ($scope, $routeParams, User, $location){
+
+  user_json = User.get({ user_id: $routeParams.user_id }, function()
+    {
+      $scope.user=user_json.user
+      console.log(user_json);
+      console.log($scope.user);
+    });
+  
+  $scope.update=function(user) {
+    // if (user.password === user.password_confirmation)
+      
+      user_to_create = new User(user)
+      user_to_create.$save(function(){
+        $scope.user = user_to_create; 
+        console.log("it should redirect to user edit page");
+
+        $location.path('/users/'+user_to_create.id+'/edit')
+      // }
+    });
+  };
+}]);
+
 
 
 getTradiesControllers.controller('UserJobsController', ['$scope','$routeParams', 'UserJobs', function ($scope,$routeParams, UserJobs)
