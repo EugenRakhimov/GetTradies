@@ -73,8 +73,7 @@ getTradiesControllers.controller('UserUpdateController', ['$scope','$routeParams
   user_json = User.get({ user_id: $routeParams.user_id }, function()
     {
       $scope.user=user_json.user
-      console.log(user_json);
-      console.log($scope.user);
+      console.log($scope.user)
     });
   
   $scope.update=function(user) {
