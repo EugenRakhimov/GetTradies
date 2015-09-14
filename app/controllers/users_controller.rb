@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       end
       if @user.profession != 'customer'
         comments=[]
-        user.tenders.where(accepted: true).each do |tender|
+        @user.tenders.where(accepted: true).each do |tender|
           if tender.comment
             comments << {comment:tender.comment,user: tender.job.user.username}
           end
@@ -65,9 +65,9 @@ class UsersController < ApplicationController
       @user.update_attributes(user_update_params)
       flash[:notice] = "Your profile has been successfully updated"
       # redirect_to(:action => 'show', :id => @user.id)
-      redirect_to jobs_path
+      render json: {message: "user updated"}
     else
-      render('edit')
+      render json: {message: "update error"}, status: :forbidden
     end
 
   end

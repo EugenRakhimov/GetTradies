@@ -42,8 +42,8 @@ getTradiesControllers.controller('JobDetailController', ['$scope','$routeParams'
 
 getTradiesControllers.controller('JobNewController', ['$scope','$routeParams', 'Job', '$location', function ($scope, $routeParams, Job, $location){
 
-$scope.update=function(job) {
-  job_to_s=new Job(job)
+$scope.update = function(job) {
+  job_to_s = new Job(job)
   job_to_s.$save(function(){
     console.log("it should redirect");
     $location.path('/jobs')
@@ -54,38 +54,35 @@ $scope.update=function(job) {
 
 getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 'User', '$location', function ($scope, $routeParams, User, $location){
 
-  $scope.create=function(user) {
-    // if (user.password === user.password_confirmation)
-      
+  $scope.create=function(user) {     
       user_to_create = new User(user)
-      user_to_create.$save(function(){
+      user_to_create.$save(function()
+      {
         $scope.user = user_to_create; 
         console.log("it should redirect to user edit page");
-
         $location.path('/users/'+user_to_create.id+'/edit')
       // }
-    });
+      });
   };
 }]);
 
 getTradiesControllers.controller('UserUpdateController', ['$scope','$routeParams', 'User', '$location', function ($scope, $routeParams, User, $location){
 
   user_json = User.get({ user_id: $routeParams.user_id }, function()
-    {
-      $scope.user=user_json.user
+    {;
+      $scope.user = user_json.user
+      if ($scope.user.profession !== "customer")
+      {
+        $scope.tradie = true;
+      }
       console.log($scope.user)
     });
   
-  $scope.update=function(user) {
-    // if (user.password === user.password_confirmation)
-      
-      user_to_create = new User(user)
-      user_to_create.$save(function(){
-        $scope.user = user_to_create; 
-        console.log("it should redirect to user edit page");
-
-        $location.path('/users/'+user_to_create.id+'/edit')
-      // }
+  $scope.update = function(user) {
+    console.log(user);
+    User.update({user_id:user.id}, user, function(){
+      console.log('Profile updated');
+      $location.path('/jobs/')
     });
   };
 }]);
