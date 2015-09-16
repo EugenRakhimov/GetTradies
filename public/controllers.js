@@ -2,12 +2,13 @@
 (function () {
 var getTradiesControllers = angular.module('getTradiesControllers', [])
 
-getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job', 'JobTenders' , 
-  function ($scope,$routeParams, Job, JobTenders)
+getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job', 'JobTenders' , 'AuthService',
+  function ($scope,$routeParams, Job, JobTenders, AuthService)
 {
 
  $scope.jobs = Job.query(function() {});
- 
+ $scope.isLoggedIn = AuthService.isLoggedIn();
+ console.log(AuthService.isLoggedIn());
  $scope.deleteJob = function(job_id) {
   console.log("job_id" +job_id)
   Job.delete({job_id:job_id});
@@ -65,6 +66,16 @@ getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 
       });
   };
 }]);
+
+
+getTradiesControllers.controller('SessionNewController', ['$scope','$routeParams', 'AuthService', '$location', function ($scope, $routeParams, AuthService, $location){
+
+  $scope.login=function(user) {     
+       console.log(user);
+       AuthService.login(user.email, user.password);
+  };
+}]);
+
 
 getTradiesControllers.controller('UserUpdateController', ['$scope','$routeParams', 'User', '$location', function ($scope, $routeParams, User, $location){
 

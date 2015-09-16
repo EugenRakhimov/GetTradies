@@ -18,11 +18,34 @@
 
 
 <ul class="menu">
-    <li><a href="#/jobs">GetTradies</a></li>
-    <li><a href="#/my_profile">My profile</a></li>
-    <li><a href="#/my_jobs">My jobs</a></li>
-    <li><a href="#/my_tenders">My tenders</a></li>
-  </ul>
+  <li><a href="#/jobs">GetTradies</a></li>
+  <li><a href="#/my_profile">My profile</a></li>
+  <li><a href="#/my_jobs">My jobs</a></li>
+  <li><a href="#/my_tenders">My tenders</a></li>
+  <li ng-show="!isLoggedIn"> 
+    <form novalidate class="simple-form" ng-controller="SessionNewController">
+      <fieldset>
+        <legend class="sr-only">Sign up</legend>
+        <div class="form-group">
+          <label for="email" class="control-label sr-only">Email:</label>
+          <input id="email" name="uEmail" type="email" ng-model="user.email" required />
+          <div ng-show="userForm.$submitted || userForm.uEmail.$dirty">
+            <span ng-show="userForm.uEmail.$error.required">Tell us your email.</span>
+            <span ng-show="userForm.uEmail.$error.email">This is not a valid email.</span>
+          </div>
+        </div>
+        <div class="form-group">          
+          <label for="password" class="control-label sr-only">Password:</label>
+          <input id="password" name="password" type="password" ng-model="user.password" required />
+          <div ng-show="userForm.$submitted || userForm.password.$dirty">
+            <span ng-show="userForm.password.$error.required">Enter your password</span>
+          </div>
+        </div>
+        <input type="submit" value="Login"class="btn btn-success form-control" ng-click="login(user)" ng-disabled="userForm.$invalid">        
+      </fieldset>
+    </form>
+  </li>
+</ul>
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -38,10 +61,10 @@
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-cookies.js"></script>
   <script src="app.js"></script>
   <script src="controllers.js"></script>
   <script src="services.js"></script>
-  <script src="job_view/job_view.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
