@@ -31,20 +31,19 @@ getTradieServices.factory('UserTenders', ['$resource',
     return $resource('users/:user_id/tenders/:tender_id.json');
   }]);
 
-var currentUser;
+
 getTradieServices.factory( 'AuthService', ['$cookies', '$resource',
   function($cookies, $resource){
-    
+    var currentUser;
     return {
     login: function(email, password, fn) {
       var Session = $resource('/sessions/:sessionId');
       var currentSession = new Session({email:email, password:password})
       currentUser = currentSession.$save(function()
         {
-          $cookies.put("currentUser", currentUser.name);          
-        });
-
-      
+          $cookies.put("currentUser", "isLoggedIn");
+          console.log($cookies.get("currentUser"));           
+        });      
     },
     logout: function(){
       //Logout work with $http
@@ -53,8 +52,9 @@ getTradieServices.factory( 'AuthService', ['$cookies', '$resource',
 
     },
     isLoggedIn: function(){
-      return true; 
-      // currentUser !== undefined
+      currentUser = $cookies.get('currentUser');
+      console.log(currentUser);
+      return currentUser !== undefined
     }
   }
   }]);

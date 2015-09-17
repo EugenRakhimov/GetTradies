@@ -7,8 +7,7 @@ getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job
 {
 
  $scope.jobs = Job.query(function() {});
- $scope.isLoggedIn = AuthService.isLoggedIn();
- console.log(AuthService.isLoggedIn());
+ 
  $scope.deleteJob = function(job_id) {
   console.log("job_id" +job_id)
   Job.delete({job_id:job_id});
@@ -16,6 +15,8 @@ getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job
 
   });
  }
+
+
 
  $scope.showInterestForJob = function(job_id) {
   tender = new JobTenders({job_id:job_id})
@@ -27,6 +28,21 @@ getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job
  }
 
 }]);
+
+
+
+ 
+
+ 
+
+
+ getTradiesControllers.controller('MenuController', ['$scope','$routeParams', 'AuthService', '$location', function ($scope, $routeParams, AuthService, $location){
+
+  $scope.isLoggedIn = !AuthService.isLoggedIn();
+   console.log($scope.isLoggedIn);
+  }]);
+
+
 
 getTradiesControllers.controller('JobDetailController', ['$scope','$routeParams', 'Job', 'JobTenders', 
   function ($scope, $routeParams, Job, JobTenders){
@@ -70,9 +86,8 @@ getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 
 
 getTradiesControllers.controller('SessionNewController', ['$scope','$routeParams', 'AuthService', '$location', function ($scope, $routeParams, AuthService, $location){
 
-  $scope.login=function(user) {     
-       console.log(user);
-       AuthService.login(user.email, user.password);
+  $scope.login=function(user) {
+   AuthService.login(user.email, user.password);
   };
 }]);
 
