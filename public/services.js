@@ -60,4 +60,42 @@ getTradieServices.factory( 'AuthService', ['$cookies', '$resource',
   }
   }]);
 
-  
+getTradieServices.factory('globalErrorInterceptor', ['$q', '$rootScope', '$cookies', '$injector', '$location',
+  function ($q, $rootScope, $cookies, $injector, $location) {
+    $rootScope.showSpinner = false;
+    $rootScope.http = null;
+    return {
+      'response': function (response) {
+        return response || $q.when(response)
+      },
+      'responseError': function (rejection) {
+        switch (rejection.status) {
+          case 401:
+            $cookies.put('currentUser', undefined)
+            // TODO: think about alerts
+            // Alert.add("warning", 'You must be logged in to perform that action', 1400 )
+            break;
+          case 404:
+            // Alert.add("danger", 'The requested resource couldn\'t be located', 1400 )
+            break;
+          case 422:
+            var validationErrors = [];
+            angular.forEach(rejection.data.errors, function(value, key){
+              validationErrors.push(key + " " +  value.join(', '))
+            });
+            console.log(validationErrors.join(', ') )
+            // Alert.add('danger', validationErrors.join(', ') )
+            break;
+          case 500:
+            // Alert.add("danger",'Server internal error: ' + rejection.data)
+            break;
+        }
+        return $q.reject(rejection);
+      }
+    }
+  }
+]);
+
+getTradieServices.config(['$httpProvider', function ($httpProvider) {
+  $httpProvider.interceptors.push('globalErrorInterceptor');
+}]);
