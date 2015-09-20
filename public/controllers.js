@@ -29,18 +29,16 @@ getTradiesControllers.controller('JobController', ['$scope', '$routeParams','Job
 
 }]);
 
+getTradiesControllers.controller('MenuController', ['$scope','$routeParams', 'AuthService', '$location', function ($scope, $routeParams, AuthService, $location){
 
-
- 
-
- 
-
-
- getTradiesControllers.controller('MenuController', ['$scope','$routeParams', 'AuthService', '$location', function ($scope, $routeParams, AuthService, $location){
-
-  $scope.isLoggedIn = !AuthService.isLoggedIn();
-   console.log($scope.isLoggedIn);
-  }]);
+  $scope.isLoggedIn = AuthService.isLoggedIn();
+  $scope.logout = function()
+  {
+    console.log("logout");
+    AuthService.logout();
+  }
+  
+}]);
 
 
 
@@ -86,8 +84,14 @@ getTradiesControllers.controller('UserNewController', ['$scope','$routeParams', 
 
 getTradiesControllers.controller('SessionNewController', ['$scope','$routeParams', 'AuthService', '$location', function ($scope, $routeParams, AuthService, $location){
 
-  $scope.login=function(user) {
+  $scope.login = function(user) {
    AuthService.login(user.email, user.password);
+   $location.path('/jobs');
+  };
+  $scope.logout = function()
+  { 
+    AuthService.logout();
+     $location.path('/jobs');
   };
 }]);
 
