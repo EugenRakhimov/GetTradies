@@ -46,7 +46,8 @@ getTradieServices.factory( 'AuthService', ['$cookies', '$resource',
         });      
     },
     logout: function(){
-      //Logout work with $http
+      var Session = $resource('/sessions/:sessionId');
+      Session.delete({sessionId:"currentId"});
       currentUser = undefined
       $cookies.put("currentUser", currentUser);
 

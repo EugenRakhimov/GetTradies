@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
   def destroy
     if session[:user_id]
       session[:user_id] = nil
-      redirect_to '/jobs', notice: "user logged out"
+      render json: {message:"you logged out"}
     end
   end
 
