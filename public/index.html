@@ -23,7 +23,7 @@
   <li><a href="#/my_jobs">My jobs</a></li>
   <li><a href="#/my_tenders">My tenders</a></li>
   <li ng-hide="isLoggedIn"> 
-    <form novalidate class="simple-form" ng-controller="SessionNewController" ng-hide="isLoggedIn">
+    <form novalidate class="simple-form" ng-hide="isLoggedIn">
       <fieldset>
         <legend class="sr-only">Sign up</legend>
         <div class="form-group">
@@ -45,7 +45,7 @@
       </fieldset>
     </form>
   </li>
-  <li ng-show="isLoggedIn"><a ng-click="logout()"class="btn btn-success form-control" ng-controller="SessionNewController">Logout</a></li>
+  <li ng-show="isLoggedIn"><a ng-click="logout()"class="btn btn-success form-control" >Logout</a></li>
 </ul>
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

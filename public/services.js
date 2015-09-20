@@ -32,17 +32,17 @@ getTradieServices.factory('UserTenders', ['$resource',
   }]);
 
 
-getTradieServices.factory( 'AuthService', ['$cookies', '$resource',
+getTradieServices.factory( 'AuthService', ['$cookies', '$resource', 
   function($cookies, $resource){
     var currentUser;
     return {
-    login: function(email, password, fn) {
+    login: function(email, password, logged) {
       var Session = $resource('/sessions/:sessionId');
       var currentSession = new Session({email:email, password:password})
       currentUser = currentSession.$save(function()
         {
-          $cookies.put("currentUser", "isLoggedIn");
-          console.log($cookies.get("currentUser"));           
+          $cookies.put("currentUser", "isLoggedIn"); 
+          logged();                                         
         });      
     },
     logout: function(){
